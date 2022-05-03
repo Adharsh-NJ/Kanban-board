@@ -148,21 +148,21 @@ function sort() {
 sortElement.addEventListener("input", sort)
 
 //drag and drop
-requestContainerElement.addEventListener("drop", dragDrop)
+requestContainerElement.addEventListener("drop", dropCard)
 requestContainerElement.addEventListener("dragover", (e) => {
     dragItem.parentElement.id === "progressContainer" && e.preventDefault()
 })
-progressContainerElement.addEventListener("drop", dragDrop)
+progressContainerElement.addEventListener("drop", dropCard)
 progressContainerElement.addEventListener("dragover", (e) => {
     dragItem.parentElement.id === "requestContainer" && e.preventDefault()
 })
 
-completeContainerElement.addEventListener("drop", dragDrop)
+completeContainerElement.addEventListener("drop", dropCard)
 completeContainerElement.addEventListener("dragover", (e) => {
     dragItem.parentElement.id === "progressContainer" && e.preventDefault()
 })
 
-function dragDrop(e) {
+function dropCard(e) {
     let id = e.dataTransfer.getData("text/plain")
     
     dataCollection.map(value => {
