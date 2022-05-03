@@ -10,6 +10,7 @@ let priorityElement = document.querySelector("#priorityElement")
 let sortElement = document.querySelector("#sortElement")
 let counter = 0;
 let dataCollection = []
+let dragItem = null
 
 submitButtonElement.addEventListener("click", (e) => {
     e.preventDefault()
@@ -38,11 +39,15 @@ let createCard = (data) => {
     let leftButton = document.createElement("button")
     let rightButton = document.createElement("button")
     cardContainer.dataset.id = data.id;//passing id to card to keep track of card
+    data.status !== "complete" && cardContainer.setAttribute("draggable", true)
     heading.innerHTML = data.name;
     description.appendChild(descriptionText)
-    leftButton.innerHTML = "<"
-    rightButton.innerHTML = ">"
+    leftButton.innerHTML = "⬅️"
+    rightButton.innerHTML = "➡️"
     cardContainer.classList.add("card")
+
+    //adding drag and drop to cards
+    cardContainer.addEventListener("dragstart", dragStart)
 
     //adding click event to navigation buttons
     leftButton.addEventListener("click", (e) => {
@@ -142,25 +147,70 @@ function sort() {
 
 sortElement.addEventListener("input", sort)
 
+//drag and drop
+requestContainerElement.addEventListener("drop", dragDrop)
+requestContainerElement.addEventListener("dragover", (e) => {
+    dragItem.parentElement.id === "progressContainer" && e.preventDefault()
+})
+progressContainerElement.addEventListener("drop", dragDrop)
+progressContainerElement.addEventListener("dragover", (e) => {
+    dragItem.parentElement.id === "requestContainer" && e.preventDefault()
+})
+
+completeContainerElement.addEventListener("drop", dragDrop)
+completeContainerElement.addEventListener("dragover", (e) => {
+    dragItem.parentElement.id === "progressContainer" && e.preventDefault()
+})
+
+function dragDrop(e) {
+    let id = e.dataTransfer.getData("text/plain")
+    
+    dataCollection.map(value => {
+        if (+id === value.id) {
+            if (value.status === "request" && e.target.id === "progressContainer") {
+                dragItem.remove()
+                value.status = "progress"
+                sortElement.value ? sort() : createCard(value)
+            } else if (value.status === "progress" && e.target.id === "requestContainer") {
+                dragItem.remove()
+                value.status = "request"
+                sortElement.value ? sort() : createCard(value)
+            } else if (value.status === "progress" && e.target.id === "completeContainer") {
+                dragItem.remove()
+                value.status = "complete"
+                sortElement.value ? sort() : createCard(value)
+            }
+        }
+    })
+}
+
+function dragStart(e) {
+    e.dataTransfer.setData("text/plain", this.dataset.id)
+    dragItem = this
+}
+
+
+//Common functions
 //to remove single card from container 
 function detach(node) {
     return node.parentElement?.removeChild(node);
 }
 
+
 //adding side strip colors according to type
 function addType(card, type) {
     switch (type) {
         case "Feature": {
-            card.style.setProperty("--color", "green")
+            card.style.setProperty("--color", "#CC338B")
             break;
         }
         case "Bug": {
-            card.style.setProperty("--color", "red")
+            card.style.setProperty("--color", "#D9534F")
             break;
         }
         case "Enhancement": {
-            card.style.setProperty("--color", "rgb(340, 81, 10)")
-            break;
+            card.style.setProperty("--color", "#5CB85C")
+            break; 1
         }
     }
 }

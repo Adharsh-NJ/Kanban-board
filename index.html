@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,46 +8,53 @@
     <title>Document</title>
     <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
     <div class="form-container">
-     <form action="" id="infoForm" class="info-form">
-         <input type="text" id="nameInput" class="name-input"  placeholder="Name" minlength="3" required/>
-        <input id="description" type="text"  class="description-input" placeholder="Description"/>
-        <select id="typeSelect" class="type-input">
-            <option>Feature</option>
-            <option>Bug</option>
-            <option>Enhancement</option>
-        </select>
-     
-            <label class="Priority-label" >Priority:</label><input type="range" min="1" max="100" value="0" class="priority" id="priorityElement"/>
-        
-        <input id="submitBtn" class="submit-button" type="submit" />
-     </form>
+        <form action="" id="infoForm" class="info-form">
+            <input type="text" id="nameInput" class="name-input" value="hello" placeholder="Name" minlength="3"
+                required />
+            <input id="description" type="text" class="description-input" placeholder="Description" />
+            <select id="typeSelect" class="type-input" RE>
+                <option value="" disabled selected>Select type</option>
+                <option>Feature</option>
+                <option>Bug</option>
+                <option>Enhancement</option>
+            </select>
+
+            <label class="Priority-label">Priority:</label><input type="range" min="1" max="100" value="0"
+                class="priority" id="priorityElement" />
+
+            <input id="submitBtn" class="submit-button" type="submit" />
+        </form>
     </div>
-    <select id="sortElement" class="sort-select" >
+    <select id="sortElement" class="sort-select">
         <option value="" disabled selected>Sort by</option>
         <option>Low to high priority</option>
-        <option >High to low priority</option>
+        <option>High to low priority</option>
     </select>
     <div class="status-container" id="statusContainer">
         <div>
-            <h1>Request</h1>
-        <div class="request-container" id="requestContainer">
-     </div>
+            <h1 class="container-heading">Request</h1>
+            <div class="request-container" id="requestContainer">
+            </div>
         </div>
-     <div>
-        <h1>Progress</h1> 
-        <div class="progress-container" id="progressContainer">
-        
-     </div></div>   
-     
-     <div>
-        <h1>Completed</h1> 
-        <div class="complete-container" id="completeContainer">
-        
-    </div></div>
-     
+        <div>
+            <h1 class="container-heading">Progress</h1>
+            <div class="progress-container" id="progressContainer">
+
+            </div>
+        </div>
+
+        <div>
+            <h1 class="container-heading">Completed</h1>
+            <div class="complete-container" id="completeContainer">
+
+            </div>
+        </div>
+
     </div>
     <script src="./index.js"></script>
 </body>
+
 </html>
